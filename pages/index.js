@@ -9,6 +9,10 @@ export default function Home() {
     <Layout home>
       <Head>
         <title>pilotage</title>
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
       </Head>
       <section className={utilStyles.headingMd}>
         <p>Table</p>

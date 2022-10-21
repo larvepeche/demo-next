@@ -41,4 +41,11 @@ export const data = [
     num_pages: 552,
     rating: 4.36,
   },
+  {
+    id: 7,
+    title: "boky hafa",
+    authors: "Markus Zusak",
+    num_pages: 19,
+    rating: 4,
+  },
 ];

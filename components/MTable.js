@@ -14,6 +14,23 @@ const MTable = () => {
       <MaterialTable
         columns={columns}
         data={data}
+        options={{
+          grouping: true,
+        }}
+        detailPanel={(rowData) => {
+          return (
+            <table border="1">
+              <tr>
+                <td>Name</td>
+                <td>rating</td>
+              </tr>
+              <tr>
+                <td>{rowData.authors}</td>
+                <td>{rowData.rating}</td>
+              </tr>
+            </table>
+          );
+        }}
         title="dispositif de pilotage"
       />
     </div>
