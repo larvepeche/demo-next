@@ -3,18 +3,9 @@ import Link from "next/link";
 import Layout from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import MTable from "../components/MTable";
-import { data, activeColumns } from "../src/data";
+import { columns, data } from "../src/columns";
 
-export async function getStaticProps() {
-  return {
-    props: {
-      data,
-      activeColumns,
-    },
-  };
-}
-
-export default function Home({ data, activeColumns }) {
+export default function Home() {
   return (
     <Layout home>
       <Head>
@@ -31,7 +22,7 @@ export default function Home({ data, activeColumns }) {
         <Link href="posts/Details"> see my tables </Link>
       </section>
       <section>
-        <MTable columns={activeColumns} data={data} />
+        <MTable columns={columns} data={data} />
       </section>
     </Layout>
   );
