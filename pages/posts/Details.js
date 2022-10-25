@@ -1,8 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import Layout from "../../components/layout";
+import { useRouter } from "next/router";
 
-export default function FirstPost() {
+export default function Details() {
+  const router = useRouter();
+  const data = router.query;
+  console.log(data);
   return (
     <>
       <Layout>
@@ -13,7 +17,7 @@ export default function FirstPost() {
         <h2>
           <Link href="/">Back to home</Link>
         </h2>
-
+        <h3>{data.authors}</h3>
         <section>Nom</section>
         <section>
           {/* SYNTHESE  */}

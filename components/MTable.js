@@ -1,14 +1,7 @@
 import MaterialTable from "material-table";
-import { data } from "../src/data";
+import Link from "next/link";
 
-const columns = [
-  { title: "Title", field: "title" },
-  { title: "Author", field: "authors" },
-  { title: "Page Count", field: "num_pages" },
-  { title: "Rating", field: "rating" },
-];
-
-const MTable = () => {
+const MTable = ({ data, columns }) => {
   return (
     <div style={{ maxWidth: "100%" }}>
       <MaterialTable
@@ -16,6 +9,10 @@ const MTable = () => {
         data={data}
         options={{
           grouping: true,
+          actionsColumnIndex: 0,
+          columnsButton: true,
+          showGroupingCount: true,
+          exportButton: true,
         }}
         detailPanel={(rowData) => {
           return (
@@ -31,6 +28,15 @@ const MTable = () => {
             </table>
           );
         }}
+        actions={[
+          (rowData) => ({
+            icon: () => (
+              <Link href={{ pathname: "posts/Details", query: rowData }}>
+                <i class="material-icons">read_more</i>
+              </Link>
+            ),
+          }),
+        ]}
         title="dispositif de pilotage"
       />
     </div>
