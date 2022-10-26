@@ -4,6 +4,15 @@ import Layout from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import MTable from "../components/MTable";
 import { columns, data } from "../src/columns";
+import { GetServerSideProps } from "next";
+import { resetServerContext } from "react-beautiful-dnd";
+
+export async function getStaticProps() {
+  resetServerContext();
+  return {
+    props: {},
+  };
+}
 
 export default function Home() {
   return (
