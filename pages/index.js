@@ -26,7 +26,6 @@ export default function Home() {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>Table</p>
-        <Link href="posts/Blog"> blog home </Link>
         <br />
         <Link href="posts/Details"> see my tables </Link>
       </section>

@@ -1,4 +1,4 @@
-export const donne = [
+export const donnee = [
   {
     id: 1,
     title: "Region",
@@ -142,4 +142,5 @@ export const classement = [
   { title: "Classement client", field: "rating" },
 ];
 
+//it's bugging for now
 export const activeColumns = [...classement, ...Acqui];
