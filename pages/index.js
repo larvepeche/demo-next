@@ -6,6 +6,7 @@ import MTable from "../components/MTable";
 import { columns, data } from "../src/columns";
 import { GetServerSideProps } from "next";
 import { resetServerContext } from "react-beautiful-dnd";
+import CustomTable from "../components/CustomTable";
 
 export async function getStaticProps() {
   resetServerContext();
@@ -32,6 +33,9 @@ export default function Home() {
       </section>
       <section>
         <MTable columns={columns} data={data} />
+      </section>
+      <section>
+        <CustomTable />
       </section>
     </Layout>
   );
