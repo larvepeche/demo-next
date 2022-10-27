@@ -1,6 +1,8 @@
 import { Fragment, useCallback, useMemo } from "react";
 import {
   useExpanded,
+  useGroupBy,
+  useSortBy,
   useTable,
 } from "react-table/dist/react-table.development";
 import styles from "./CustomTable.module.css";
@@ -27,7 +29,11 @@ const CustomTable = () => {
         id: "expander", // It needs an ID
         Cell: ({ row }) => (
           <span {...row.getToggleRowExpandedProps()}>
-            {row.isExpanded ? "x" : ">"}
+            {!row.isGrouped
+              ? row.isExpanded
+                ? "x"
+                : ">"
+              : "(" + row.subRows.length + ")"}
           </span>
         ),
       },
@@ -67,8 +73,8 @@ const CustomTable = () => {
     rows,
     prepareRow,
     visibleColumns,
-    state: { expanded },
-  } = useTable({ columns, data }, useExpanded);
+    state: { groupBy, expanded },
+  } = useTable({ columns, data }, useGroupBy, useSortBy, useExpanded);
 
   return (
     <table {...getTableProps()} className={styles.customTable}>
@@ -76,7 +82,18 @@ const CustomTable = () => {
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                {column.canGroupBy ? (
+                  // If the column can be grouped, let's add a toggle
+                  <span {...column.getGroupByToggleProps()}>
+                    {column.isGrouped ? "🛑 " : "👊 "}
+                  </span>
+                ) : null}
+                {column.render("Header")}{" "}
+                <span>
+                  {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
+                </span>
+              </th>
             ))}
           </tr>
         ))}
@@ -89,11 +106,28 @@ const CustomTable = () => {
               <tr>
                 {row.cells.map((cell) => {
                   return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                    <td {...cell.getCellProps()}>
+                      {cell.isGrouped ? (
+                        // If it's a grouped cell, add an expander and row count
+                        <>
+                          <span {...row.getToggleRowExpandedProps()}>
+                            {row.isExpanded ? "👇" : "👉"}
+                          </span>{" "}
+                          {cell.render("Cell")}
+                        </>
+                      ) : cell.isAggregated ? (
+                        // If the cell is aggregated, use the Aggregated
+                        // renderer for cell
+                        cell.render("Aggregated")
+                      ) : cell.isPlaceholder ? null : ( // For cells with repeated values, render null
+                        // Otherwise, just render the regular cell
+                        cell.render("Cell")
+                      )}
+                    </td>
                   );
                 })}
               </tr>
-              {row.isExpanded ? (
+              {row.isExpanded && !row.isGrouped ? (
                 <tr>
                   <td colspan={visibleColumns.length}>
                     {myComponent({ row })}
